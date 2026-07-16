@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import importlib.resources
 import json
 import logging
 import sys
@@ -19,6 +20,7 @@ def main(argv: list[str] | None = None) -> int:
                     "writes a markdown report.",
     )
     parser.add_argument("--version", action="version", version=f"ian-aws-audit {__version__}")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Verbose logging.")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     run = subparsers.add_parser("run", help="Run an audit and write a markdown report.")
@@ -26,7 +28,24 @@ def main(argv: list[str] | None = None) -> int:
     run.add_argument("--region", action="append", help="Region to scan (repeatable). Default: all.")
     run.add_argument("--out", default=None, help="Output file (default: audit-YYYY-MM-DD.md).")
     run.add_argument("--model", default=None, help="Anthropic model (default: claude-sonnet-4-6).")
-    run.add_argument("--verbose", "-v", action="store_true", help="Verbose logging.")
+
+    install = subparsers.add_parser(
+        "install-skill",
+        help="Install the bundled skill into Claude Code or Cursor.",
+    )
+    install.add_argument(
+        "target",
+        nargs="?",
+        default="claude",
+        choices=["claude", "cursor"],
+        help="Which agent to install for (default: claude).",
+    )
+    install.add_argument(
+        "--path",
+        default=None,
+        help="Override install directory (default: ~/.claude/skills/ian-aws-audit for claude, "
+             "./.cursor/rules for cursor).",
+    )
 
     args = parser.parse_args(argv)
 
@@ -36,7 +55,32 @@ def main(argv: list[str] | None = None) -> int:
         stream=sys.stderr,
     )
 
+    if args.command == "install-skill":
+        return _install_skill(args)
     return _run(args)
+
+
+def _install_skill(args) -> int:
+    if args.target == "claude":
+        default = Path.home() / ".claude" / "skills" / "ian-aws-audit"
+        source = importlib.resources.files("ian_aws_audit") / "_skills" / "claude" / "SKILL.md"
+        target_dir = Path(args.path) if args.path else default
+        target_dir.mkdir(parents=True, exist_ok=True)
+        target_file = target_dir / "SKILL.md"
+        target_file.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
+        _log(f"installed Claude skill to {target_file}")
+        _log("restart Claude Code, then try: 'audit my AWS account'")
+        return 0
+
+    default = Path.cwd() / ".cursor" / "rules"
+    source = importlib.resources.files("ian_aws_audit") / "_skills" / "cursor" / "ian-aws-audit.mdc"
+    target_dir = Path(args.path) if args.path else default
+    target_dir.mkdir(parents=True, exist_ok=True)
+    target_file = target_dir / "ian-aws-audit.mdc"
+    target_file.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
+    _log(f"installed Cursor rule to {target_file}")
+    _log("reload Cursor, then ask the agent: 'audit my AWS account'")
+    return 0
 
 
 def _run(args) -> int:

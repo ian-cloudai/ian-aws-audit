@@ -44,13 +44,13 @@ The report contains a summary, a mermaid diagram of the account, and each findin
 
 ## Use inside Claude Code
 
-Copy the skill into your Claude Code skills directory:
+One command:
 
 ```bash
-cp -r skills/claude/ian-aws-audit ~/.claude/skills/
+ian-aws-audit install-skill
 ```
 
-Then in Claude Code:
+That drops the skill into `~/.claude/skills/ian-aws-audit/`. Restart Claude Code, then:
 
 > `audit my prod AWS account`
 
@@ -58,14 +58,13 @@ Claude will run the CLI, read the report, summarize the findings, and offer reme
 
 ## Use inside Cursor
 
-Copy the rule into your project:
+Run from the root of the project you want the rule available in:
 
 ```bash
-mkdir -p .cursor/rules
-cp skills/cursor/ian-aws-audit.mdc .cursor/rules/
+ian-aws-audit install-skill cursor
 ```
 
-Then ask Cursor's agent:
+That writes `.cursor/rules/ian-aws-audit.mdc`. Reload Cursor, then ask the agent:
 
 > `run an AWS audit on the staging profile`
 
