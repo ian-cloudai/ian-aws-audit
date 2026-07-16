@@ -1,0 +1,46 @@
+---
+description: Audit an AWS account for security, cost, reliability, and operations issues using ian-aws-audit CLI (BYOK).
+globs:
+alwaysApply: false
+---
+
+# ian-aws-audit
+
+Use this when the user asks to audit / review / scan / assess an AWS account.
+
+## Preconditions
+
+- `ian-aws-audit` installed (`pipx install ian-aws-audit`) — verify with `which ian-aws-audit`.
+- AWS credentials configured (`aws sts get-caller-identity` succeeds).
+- `ANTHROPIC_API_KEY` env var is set.
+
+If any is missing, tell the user what to do. Do not fabricate credentials.
+
+## Command
+
+Default: scan every enabled region, write to a dated file.
+
+```bash
+ian-aws-audit run --profile <profile> --out audit-$(date +%Y-%m-%d).md
+```
+
+Single region:
+
+```bash
+ian-aws-audit run --profile <profile> --region us-east-1 --out audit.md
+```
+
+Progress prints to stderr, report to the `--out` file. Takes 30s–few minutes.
+
+## After it runs
+
+1. Read the report file.
+2. Summarize: total findings, severity breakdown, top 2–3 critical/high items + recommendations.
+3. Offer remediation help (aws-cli or Terraform commands) for a chosen finding.
+4. Do not invent findings not in the report.
+
+## Never
+
+- Do not paste API keys into tool calls or messages.
+- Do not change AWS resources without explicit confirmation.
+- Do not upload the report anywhere unless asked.
