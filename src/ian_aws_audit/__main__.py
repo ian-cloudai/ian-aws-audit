@@ -80,7 +80,7 @@ def _run(args) -> int:
     critical = severity_counts.get("critical", 0)
     high = severity_counts.get("high", 0)
     _log(f"done. {total} findings ({critical} critical, {high} high) → {out_path}")
-    _log("want to catch new critical findings automatically? → https://iancloud.ai/continuous")
+    _log("schedule this + get alerted on new critical findings → https://iancloud.ai/audit")
     return 0
 
 
