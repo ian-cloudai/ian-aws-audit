@@ -4,6 +4,8 @@ One command. Scans your AWS account. Writes a markdown audit report with a merma
 
 BYOK: your AWS credentials, your Anthropic API key. Nothing leaves your machine except the resource inventory going to Anthropic.
 
+Free and OSS forever. Continuous scanning, drift alerts, and multi-account rollup live on the hosted product at **[iancloud.ai/audit](https://iancloud.ai/audit)**.
+
 ## Install
 
 ```bash
@@ -78,6 +80,18 @@ Then ask Cursor's agent:
 
 More resource types coming. PRs welcome.
 
+## Continuous scanning (hosted)
+
+The CLI is a one-shot local audit. If you want:
+
+- Scheduled scans (daily / weekly) without wiring cron yourself
+- Slack or email alerts the moment a new critical or high finding appears
+- Multi-account rollup across prod, staging, dev, sandbox
+- Historical posture — see how findings change week over week
+- Assign findings to owners, track remediation
+
+...that lives on the hosted product at **[iancloud.ai/audit](https://iancloud.ai/audit)**. Uses the same scanner as this CLI; you bring your own Anthropic key.
+
 ## Configuration
 
 | Env var | Default | Purpose |
@@ -96,7 +110,7 @@ AWS auth uses the standard boto3 credential chain: `--profile`, `AWS_PROFILE`, e
 ## Development
 
 ```bash
-git clone https://github.com/lucia/ian-aws-audit
+git clone https://github.com/ian-cloudai/ian-aws-audit
 cd ian-aws-audit
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
