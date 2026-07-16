@@ -56,7 +56,7 @@ def build(account_id: str | None, resources: Iterable[dict]) -> tuple[str, str]:
 
     for rtype, records in by_type.items():
         capped = records[:MAX_RESOURCES_PER_TYPE]
-        note = f" — showing first {len(capped)}" if len(capped) < len(records) else ""
+        note = f" (showing first {len(capped)})" if len(capped) < len(records) else ""
         lines.append("")
         lines.append(f"## {rtype} ({len(records)}{note})")
         for r in capped:

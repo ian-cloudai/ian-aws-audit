@@ -10,7 +10,7 @@ Use this when the user asks to audit / review / scan / assess an AWS account.
 
 ## Preconditions
 
-- `ian-aws-audit` installed (`pipx install ian-aws-audit`) — verify with `which ian-aws-audit`.
+- `ian-aws-audit` installed (`pipx install ian-aws-audit`). Verify with `which ian-aws-audit`.
 - AWS credentials configured (`aws sts get-caller-identity` succeeds).
 - `ANTHROPIC_API_KEY` env var is set.
 

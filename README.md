@@ -1,6 +1,6 @@
 # ian-aws-audit
 
-One command. Scans your AWS account. Writes a markdown audit report with a mermaid infrastructure map. Security, cost, reliability, and operations findings — reviewed by Claude, cited to real resource IDs.
+One command. Scans your AWS account. Writes a markdown audit report with a mermaid infrastructure map. Security, cost, reliability, and operations findings, reviewed by Claude, cited to real resource IDs.
 
 BYOK: your AWS credentials, your Anthropic API key. Nothing leaves your machine except the resource inventory going to Anthropic.
 
@@ -76,7 +76,7 @@ Then ask Cursor's agent:
 - RDS instances (public accessibility, multi-AZ, backup retention, encryption)
 - S3 buckets (public access block, versioning, encryption)
 - Lambda functions (runtime, memory, timeout)
-- IAM users (MFA, access key age, attached policies — flags Admin-without-MFA)
+- IAM users (MFA, access key age, attached policies, flags Admin-without-MFA)
 
 More resource types coming. PRs welcome.
 
@@ -87,7 +87,7 @@ The CLI is a one-shot local audit. If you want:
 - Scheduled scans (daily / weekly) without wiring cron yourself
 - Slack or email alerts the moment a new critical or high finding appears
 - Multi-account rollup across prod, staging, dev, sandbox
-- Historical posture — see how findings change week over week
+- Historical posture, see how findings change week over week
 - Assign findings to owners, track remediation
 
 ...that lives on the hosted product at **[iancloud.ai/audit](https://iancloud.ai/audit)**. Uses the same scanner as this CLI; you bring your own Anthropic key.
@@ -96,7 +96,7 @@ The CLI is a one-shot local audit. If you want:
 
 | Env var | Default | Purpose |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | — required — | Your Anthropic API key |
+| `ANTHROPIC_API_KEY` | required | Your Anthropic API key |
 | `ANTHROPIC_AUDIT_MODEL` | `claude-sonnet-4-6` | Model override |
 | `AWS_PROFILE` | default | Standard boto3 profile |
 
@@ -104,7 +104,7 @@ AWS auth uses the standard boto3 credential chain: `--profile`, `AWS_PROFILE`, e
 
 ## What it costs you
 
-- **AWS calls:** free — all `Describe*`/`List*`/`Get*`, no rate impact.
+- **AWS calls:** free. All `Describe*`/`List*`/`Get*`, no rate impact.
 - **Anthropic:** one `messages` call per audit. For an 80-resource account, roughly $0.02–$0.10 with Sonnet 4.6.
 
 ## Development

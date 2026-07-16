@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ian-aws-audit"
-version = "0.1.3"
-description = "BYOK AWS account audit — one command, markdown report, works inside Claude Code and Cursor."
+version = "0.1.4"
+description = "BYOK AWS account audit: one command, markdown report, works inside Claude Code and Cursor."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"

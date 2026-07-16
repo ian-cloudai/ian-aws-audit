@@ -9,8 +9,8 @@ You run `ian-aws-audit`, which scans an AWS account with boto3, sends the invent
 
 ## Preconditions
 
-1. `ian-aws-audit` is installed (`pipx install ian-aws-audit` — check with `which ian-aws-audit`).
-2. AWS credentials are configured (`~/.aws/credentials`, `AWS_PROFILE`, or instance role — check with `aws sts get-caller-identity`).
+1. `ian-aws-audit` is installed (`pipx install ian-aws-audit`). Check with `which ian-aws-audit`.
+2. AWS credentials are configured (`~/.aws/credentials`, `AWS_PROFILE`, or instance role). Check with `aws sts get-caller-identity`.
 3. `ANTHROPIC_API_KEY` is set in the environment.
 
 If any precondition is missing, tell the user exactly what to do and stop. Do not attempt to invent credentials.

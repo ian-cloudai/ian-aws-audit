@@ -42,7 +42,7 @@ def _header(account_id, resource_count, sev_counts, findings, completed_at) -> s
         f"{sev_counts.get(s, 0)} {s}" for s in _SEVERITY_ORDER if sev_counts.get(s, 0)
     ) or "none"
     return (
-        f"# Infrastructure Audit — {account}\n\n"
+        f"# Infrastructure Audit: {account}\n\n"
         f"- **Generated:** {generated}\n"
         f"- **Resources scanned:** {resource_count}\n"
         f"- **Findings:** {total} ({counts_inline})"
